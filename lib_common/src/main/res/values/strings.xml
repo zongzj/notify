@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">lib_common</string>
+    <string name="share_selected_source">分享选中源</string>
+    <string name="scan_qr_code">扫描二维码</string>
+    <string name="share">分享</string>
+    <string name="share_app">软件分享</string>
+    <string name="flow_sys">跟随系统</string>
+    <string name="text_too_long_qr_error">文字太多，生成二维码失败</string>
+    <string name="copy_complete">已拷贝</string>
+
+    <string name="get_storage_per">需要存储权限</string>
+    <string name="dialog_title">提示</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_confirm">确定</string>
+    <string name="dialog_setting">去设置</string>
+    <string name="tip_cannot_jump_setting_page">无法跳转至设置界面</string>
+
+</resources>

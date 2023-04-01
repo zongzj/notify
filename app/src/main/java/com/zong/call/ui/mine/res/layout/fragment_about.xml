@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/include_toolbar" />
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_protocol"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="用户协议"
+        android:visibility="gone" />
+
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_qq"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="点击加入QQ群" />
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_gzh"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="关注公众号（宗介网络科技）" />
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_lianxi"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="联系我" />
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_market"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="给个好评吧" />
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_update"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="版本更新" />
+
+    <com.zong.common.view.UITextView
+        android:id="@+id/tv_privacy"
+        style="@style/AppSetting"
+        android:drawableEnd="@mipmap/shop_detail_right"
+        android:text="隐私政策" />
+
+
+</LinearLayout>

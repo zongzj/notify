@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/include_toolbar" />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/my_notify_content"
+        app:title="通知内容权限"
+        app:summary="播报各种软件的通知内容"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightStyle="iconShow"
+        app:rightIcon="@drawable/selector_permission_switch"
+        />
+    <com.zong.common.view.MyLayout
+        android:id="@+id/my_battery"
+        app:title="忽略电池优化"
+        app:summary="防止软件在后台被冻结(必须)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightStyle="iconShow"
+        app:rightIcon="@drawable/selector_permission_switch"
+        />
+    <com.zong.common.view.MyLayout
+        android:id="@+id/my_float"
+        app:title="悬浮窗权限"
+        app:summary="展示快捷操作"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightStyle="iconShow"
+        app:rightIcon="@drawable/selector_permission_switch"
+        />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/my_notify"
+        app:title="通知栏"
+        app:summary="展示快捷操作信息"
+        app:rightIcon="@drawable/selector_permission_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightStyle="iconShow"
+
+        />
+    <com.zong.common.view.MyLayout
+        android:id="@+id/my_auto"
+        app:title="设置自启动"
+        app:summary="设置成功后，可不必设置壁纸保活"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightStyle="iconShow"
+        />
+    <com.zong.common.view.MyLayout
+        android:id="@+id/my_wallpaper"
+        app:title="壁纸保活"
+        android:visibility="gone"
+        app:summary="增强软件稳定运行（建议打开）"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightStyle="iconShow"
+        />
+
+</LinearLayout>

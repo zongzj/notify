@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_10"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:background="@drawable/shape_bg_round_white_5"
+    android:minHeight="95dp"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/mode_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="会议模式"
+        android:textColor="#333"
+        android:textSize="16sp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mode_name"
+        android:layout_alignStart="@+id/mode_name"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+
+        android:text="周一"
+        android:textColor="#333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date"
+        android:layout_alignStart="@+id/tv_date"
+        android:text="播报软件 :"
+        android:textColor="#333"
+        android:textSize="14sp"
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/app_name"
+        android:orientation="horizontal" />
+
+    <Switch
+        android:id="@+id/sw"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:padding="15dp" />
+
+</RelativeLayout>

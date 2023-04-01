@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/include_toolbar" />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/tv_guide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@mipmap/ic_xinshou"
+        app:iconTintColor="@color/colorPrimaryDark"
+        app:summary="新手必读"
+        app:title="使用指南" />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/tv_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@mipmap/icon_quanxian"
+        app:summary="软件正常使用需要的配置"
+        app:iconTintColor="@color/colorPrimaryDark"
+        app:title="权限设置" />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/tv_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@drawable/icon_music"
+        app:summary="设置/语速/类型/语音引擎"
+        app:iconTintColor="@color/colorPrimaryDark"
+        app:title="声音设置" />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/tv_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@mipmap/icon_feedback"
+        app:iconTintColor="@color/colorPrimaryDark"
+        app:summary="问题反馈和建议"
+        app:title="反馈" />
+
+    <com.zong.common.view.MyLayout
+        android:id="@+id/tv_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconTintColor="@color/colorPrimaryDark"
+        app:leftIcon="@drawable/ic_info_vector"
+        app:title="关于"
+        app:summary="隐私政策、版本更新、联系方式" />
+
+
+
+</LinearLayout>

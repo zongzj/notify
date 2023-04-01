@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sound_type">
+        <item>通话</item>
+        <item>跟随系统（推荐）</item>
+        <item>铃声（外放）</item>
+        <item>媒体</item>
+        <item>闹钟（外放）</item>
+    </string-array>
+</resources>

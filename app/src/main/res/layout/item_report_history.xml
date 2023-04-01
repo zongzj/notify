@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_10"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:background="@drawable/shape_bg_round_white_5"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_logo"
+        android:text="2021-12-11 20:45:31"
+        android:textColor="@color/select_tv_font"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/tv_time"
+        android:text="微信"
+        android:textColor="@color/teal_700"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_context"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_logo"
+        android:maxLines="10"
+        android:text="赵德馨教授起诉中国知网获赔"
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/bt_read"
+        android:layout_width="40dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/read" />
+
+
+</RelativeLayout>

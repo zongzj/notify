@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor1"
+    >
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/shape_bg_round_white_5"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日屏幕使用时间"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/user_time_long"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_today"
+            android:layout_marginTop="20dp"
+            android:text="5小时20分钟"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/unlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_time_long"
+            android:layout_marginTop="15dp"
+            android:text="16次解锁"
+            android:textColor="#302E2E" />
+
+        <TextView
+            android:id="@+id/notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/unlock"
+            android:layout_marginStart="30dp"
+            android:layout_toRightOf="@+id/unlock"
+            android:text="17次通知"
+            android:textColor="#302E2E" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_record"
+        android:padding="10dp"
+        android:text="点击列表可编辑，长按列表可移除，通知栏可停止当前播报"
+        android:textColor="#333"
+        android:textSize="12sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_tips"
+        android:fadeScrollbars="false"
+        android:scrollbars="vertical" />
+
+    <com.zong.call.utils.MyFloatAddButton
+        android:id="@+id/floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/icon_add"
+        android:layout_marginBottom="60dp"
+        android:tooltipText="添加播报模式"
+        app:backgroundTint="@color/colorPrimary"
+        app:tint="@android:color/white" />
+
+
+</RelativeLayout>
