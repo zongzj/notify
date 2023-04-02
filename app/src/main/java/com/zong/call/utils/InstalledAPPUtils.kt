@@ -12,8 +12,9 @@ import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.Gson
 import com.zong.call.BuildConfig
 import com.zong.call.bean.InstalledApp
-import com.zong.call.bean.ModeBean
+import com.zong.call.db.entity.ModeBean
 import com.zong.call.constant.Constant
+import com.zong.common.ext.ensureBackgroundThread
 import com.zong.common.utils.LogUtils
 import com.zong.common.utils.MMKVUtil
 import java.io.File
@@ -22,46 +23,36 @@ import java.lang.reflect.Type
 
 object InstalledAPPUtils {
     private const val TAG = "InstalledAPPUtils"
+
     //播报的模式
     var reportModeBean = ModeBean();
     var externalStorageDirectory: File? = null
 
-    fun getAPPList(context: Context): MutableList<InstalledApp>? {
-        var installedAppList: MutableList<InstalledApp> = ArrayList()
-        var json: String = MMKVUtil.getString(Constant.INSTALL_APP)
-        if (json.isNotBlank()) {
-            LogUtils.d(TAG,"app${json}")
-            installedAppList = json.toBeanList()
-            var count = MMKVUtil.getInt(Constant.UNLOCK_NUM)
-            if (count>=3){
-                installedAppList.forEach {
-                    it.isUnLock=true
-                }
-            }
+    //    fun getAPPList(context: Context): MutableList<InstalledApp>? {
+//        var installedAppList: MutableList<InstalledApp> = ArrayList()
+//        var json: String = MMKVUtil.getString(Constant.INSTALL_APP)
+//        if (json.isNotBlank()) {
+//            LogUtils.d(TAG,"app${json}")
+//            installedAppList = json.toBeanList()
+//            var count = MMKVUtil.getInt(Constant.UNLOCK_NUM)
+//            if (count>=3){
+//                installedAppList.forEach {
+//                    it.isUnLock=true
+//                }
+//            }
+//
+//        } else {
+//            installedAppList = queryFromDevice(context)
+//
+//        }
+//
+//        return installedAppList
+//    }
+    fun getAPPList(context: Context, callback: (list: MutableList<InstalledApp>) -> Unit) {
 
-        } else {
-            installedAppList = queryFromDevice(context)
-
+        ensureBackgroundThread {
+            callback.invoke(queryFromDevice(context))
         }
-
-        return installedAppList
-    }
-
-    fun showModeList(context: Context): MutableList<ModeBean>? {
-        var installedAppList: MutableList<ModeBean> = ArrayList()
-        var json: String = MMKVUtil.getString(Constant.MODE)
-        if (json.isNotBlank()) {
-            LogUtils.d(TAG,"app${json}")
-            installedAppList = json.toBeanList()
-            installedAppList.forEach {
-                if (it.isSelect) {
-                    reportModeBean = it
-                }
-            }
-
-        }
-
-        return installedAppList
     }
 
     fun queryFromDevice(
@@ -89,20 +80,15 @@ object InstalledAPPUtils {
                 app.packageName = info.packageName
                 app.appName = appName
                 app.isSelect = false
-                app.versionName = info.versionName
                 app.index = ToPinYin.getFirstAlpha(appName)
                 app.versionCode = info.versionCode
-//                app.firstInstallTime = info.firstInstallTime
-//                app.lastUpdateTime = info.lastUpdateTime
                 ai = info.applicationInfo
                 app.icon = "${externalStorageDirectory.toString()}/${appName}" + ".png"
                 IconUtil.saveIcon(ai.loadIcon(pm), externalStorageDirectory.toString(), appName)
-//                app.coreApp = AppUtils.isAppSystem(info.packageName)
-//                app.systemApp = AppUtils.isAppSystem(info.packageName)
                 if (!info.packageName.equals(BuildConfig.APPLICATION_ID)) {//排除自己
                     installedAppList.add(app)
-
                 }
+
 //                LogUtils.d("app${app.toString()}")
             }
 

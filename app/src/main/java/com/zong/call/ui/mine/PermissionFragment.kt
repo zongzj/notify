@@ -22,6 +22,8 @@ import com.zong.call.ext.BAO_HUO
 import com.zong.call.ext.ZHINAN
 import com.zong.call.ext.initToolbarClose
 import com.zong.call.ext.powerManager
+import com.zong.call.service.ForegroundService
+import com.zong.call.service.NotifyService
 import com.zong.call.ui.MainFragment
 import com.zong.call.utils.AutoStartUtil.startToAutoStartSetting
 import com.zong.call.utils.FloatWindowPermissionChecker
@@ -52,7 +54,7 @@ class PermissionFragment : BaseBindingFragment<FragmentPermissionBinding>() {
 
         binding?.apply {
 
-            arrayOf(myBattery, myFloat, myNotify, myAuto).forEach { layout ->
+            arrayOf(myNotifyContent,myBattery, myFloat, myNotify, myAuto).forEach { layout ->
                 layout.setmOnLSettingItemClick {
                     when (layout.id) {
                         R.id.my_notify_content -> {
@@ -114,6 +116,12 @@ class PermissionFragment : BaseBindingFragment<FragmentPermissionBinding>() {
         myNotifyContent.isSelected = FloatWindowPermissionChecker.isEnabledNotify(requireActivity())
         myFloat.isSelected = FloatWindowPermissionChecker.checkAlertWindowsPermission(requireActivity())
         myNotify.isSelected = NotificationManagerCompat.from(appCtx).areNotificationsEnabled()
+        if (myNotifyContent.isSelected){
+            NotifyService.toggleNotificationListenerService()
+        }
+        if (NotificationManagerCompat.from(appCtx).areNotificationsEnabled()){
+            ForegroundService.start(appCtx)
+        }
         val hasIgnored: Boolean = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             powerManager.isIgnoringBatteryOptimizations(requireActivity().packageName)
         } else {

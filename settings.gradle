@@ -25,3 +25,5 @@ dependencyResolutionManagement {
 rootProject.name = "notify"
 include ':app'
 include ':lib_common'
+include ':lib_WheelPicker'
+include ':lib_WheelView'

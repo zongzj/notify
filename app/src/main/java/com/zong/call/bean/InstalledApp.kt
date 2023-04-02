@@ -13,7 +13,7 @@ class InstalledApp  {
     var isUnLock: Boolean = false//是否解锁
     var isSelect: Boolean = false//
     var versionCode: Int = 0
-    var icon: String? = "null"
+    var icon: String = ""
 
     override fun toString(): String {
         return "InstalledApp(packageName='$packageName', appName='$appName', versionName='$versionName', firstInstallTime=$firstInstallTime, lastUpdateTime=$lastUpdateTime, coreApp=$coreApp, isSelect=$isSelect, versionCode=$versionCode, icon=$icon)"

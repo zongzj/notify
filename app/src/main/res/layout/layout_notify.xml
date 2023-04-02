@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:id="@+id/tv_mode_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/logo"
+        android:text="模式名称"
+        android:textColor="#333" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_mode_name"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/logo"
+        android:text="播报守护中"
+        android:textColor="#333" />
+
+
+    <ImageView
+        android:id="@+id/iv_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="50dp"
+        android:layout_toLeftOf="@+id/iv_stop_read"
+        android:padding="10dp"
+        android:src="@mipmap/history"
+        android:tooltipText="播报历史" />
+
+    <ImageView
+        android:id="@+id/iv_stop_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/stop"
+        android:tooltipText="停止朗读" />
+
+
+</RelativeLayout>

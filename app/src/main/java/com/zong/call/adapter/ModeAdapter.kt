@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zong.call.R
-import com.zong.call.bean.ModeBean
+import com.zong.call.db.entity.ModeBean
 import com.zong.common.ext.imageRipple
 
 class ModeAdapter(data: MutableList<ModeBean>) :
@@ -29,7 +29,6 @@ class ModeAdapter(data: MutableList<ModeBean>) :
         item?.appList?.forEach {
             appList.add(it.appName)
         }
-//        helper.setText(R.id.app_name, "播报软件:" + appList.toString())
 
         helper.getView<Switch>(R.id.sw).apply {
             setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -41,7 +40,7 @@ class ModeAdapter(data: MutableList<ModeBean>) :
         }
         helper.getView<RecyclerView>(R.id.rv).apply {
             var linearLayoutManager = LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL;
             layoutManager = linearLayoutManager
             adapter = item?.appList?.let { AppLogoAdapter(it) }
             // holder.itemView.performClick() 是设置的和外部rv的点击事件一致

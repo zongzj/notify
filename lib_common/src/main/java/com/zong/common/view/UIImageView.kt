@@ -52,8 +52,8 @@ class UIImageView : AppCompatImageView {
         }
         readyLoad = true
         val options = RequestOptions()
-            .placeholder(R.mipmap.default_logo)
-            .error(R.mipmap.default_logo)
+            .placeholder(R.mipmap.logo)
+            .error(R.mipmap.logo)
             .transforms(CenterCrop(), RoundedCorners(90.dp))
 
         glide.load(imageUrl.getLogoImageUrl())
@@ -68,8 +68,8 @@ class UIImageView : AppCompatImageView {
         }
         readyLoad = true
         val options = RequestOptions()
-            .placeholder(R.mipmap.default_logo)
-            .error(R.mipmap.default_logo)
+            .placeholder(R.mipmap.logo)
+            .error(R.mipmap.logo)
             .transforms(RoundedCorners(90.dp))
 
         glide.load(imageUrl.getLogoImageUrl())
@@ -84,8 +84,8 @@ class UIImageView : AppCompatImageView {
         }
         readyLoad = true
         val options = RequestOptions()
-            //.placeholder(R.mipmap.default_logo)
-            //.error(R.mipmap.default_logo)
+            //.placeholder(R.mipmap.logo)
+            //.error(R.mipmap.logo)
             .transforms(CenterCrop(), RoundedCorners(90.dp))
 
         glide.load(uri)
@@ -101,8 +101,8 @@ class UIImageView : AppCompatImageView {
         }
         readyLoad = true
         val options = RequestOptions()
-            //.placeholder(R.mipmap.default_logo)
-            //.error(R.mipmap.default_logo)
+            //.placeholder(R.mipmap.logo)
+            //.error(R.mipmap.logo)
             .transforms(CenterCrop(), RoundedCorners(90.dp))
 
         glide.load(uri)

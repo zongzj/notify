@@ -23,6 +23,7 @@ fun AppCompatActivity.openActivity(
 
 }
 
+
 fun Context.openActivity(
     clazz: KClass<out Activity>,
     bundle: Bundle? = null,
@@ -38,4 +39,3 @@ fun Context.openActivity(
     startActivity(intent, compat?.toBundle())
 
 }
-

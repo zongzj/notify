@@ -1,19 +1,26 @@
 package com.zong.call.ui.app
 
 import android.content.Intent
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ServiceUtils.startService
 import com.blankj.utilcode.util.ToastUtils
 import com.zong.call.R
 import com.zong.call.adapter.ModeAdapter
-import com.zong.call.bean.ModeBean
-import com.zong.call.service.notify.NotificationUtil
+import com.zong.call.db.entity.ModeBean
+import com.zong.call.constant.Constant
+import com.zong.call.constant.IntentAction
+import com.zong.call.databinding.FragmentAppBinding
+import com.zong.call.db.appDb
+import com.zong.call.db.entity.NotifyBean
+import com.zong.call.ext.initToolbar
+import com.zong.call.service.ForegroundService
 import com.zong.call.utils.InstalledAPPUtils
 import com.zong.common.base.fragment.BaseBindingFragment
+import com.zong.common.ext.*
+import com.zong.common.utils.MMKVUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -25,12 +32,25 @@ import org.greenrobot.eventbus.ThreadMode
  */
 
 class AppFragment : BaseBindingFragment<FragmentAppBinding>() {
-    private val TAG = "AppFragment"
-    lateinit var mModeList: MutableList<ModeBean>
     lateinit var adapter: ModeAdapter
+     var mModeList= mutableListOf<ModeBean>()
+
 
     override fun viewCreated(binding: FragmentAppBinding) {
         EventBus.getDefault().register(this)
+
+        binding.includeToolbar.toolbar.run {
+            initToolbar("首页")
+            inflateMenu(R.menu.app_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.app_history -> {
+                        startActivity<ReportHistoryActivity> { }
+                    }
+                }
+                true
+            }
+        }
         initRV()
         binding.floating.setClick {
             startActivity(Intent(activity, ModeActivity::class.java))
@@ -38,28 +58,28 @@ class AppFragment : BaseBindingFragment<FragmentAppBinding>() {
     }
 
     private fun initRV() {
-        mModeList = activity?.let { InstalledAPPUtils.showModeList(it) }!!
-        activity?.let { InstalledAPPUtils.getAPPList(it) }!!
-
-        if (mModeList.size == 0) {
-            var bean = ModeBean()
-            bean.isSelect = true
-            bean.id = System.currentTimeMillis()
-            bean.modeName = "默认"
-            mModeList.add(bean)
-            MMKVUtil.putString(Constant.MODE, GsonUtils.toJson(mModeList))
-        }
-        //提前加载本地安装的app数据
         adapter = ModeAdapter(mModeList)
         binding?.rv?.layoutManager = LinearLayoutManager(activity)
-//        binding?.rv?.addItemDecoration(DividerItemDecoration(activity, LinearLayout.VERTICAL))
         binding?.rv?.adapter = adapter
-        adapter.setOnItemClickListener { adapter, view, position ->
-            var modeBean = mModeList.get(position)
-            requireActivity().openActivity(ModeActivity::class, bundleOf("modeBean" to modeBean))
+        runOnIO {
+            mModeList = appDb.modeDao.getAll() as MutableList<ModeBean>
+            if (mModeList.size == 0) {
+                var bean = ModeBean()
+                bean.isSelect = true
+                bean.id = System.currentTimeMillis()
+                bean.modeName = "工作模式"
+                mModeList.add(bean)
+                appDb.modeDao.insert(bean)
 
-//            val intent: Intent = Intent(activity, ToolsActivity::class.java)
-//            startActivity(intent)
+            }
+            adapter.setNewInstance(mModeList)
+
+        }
+
+        //提前加载本地安装的app数据
+
+        adapter.setOnItemClickListener { adapter, view, position ->
+            requireActivity().openActivity(ModeActivity::class, bundleOf("id" to mModeList[position].id))
         }
 
         adapter.setOnItemChildClickListener { adapter, view, position ->
@@ -76,11 +96,12 @@ class AppFragment : BaseBindingFragment<FragmentAppBinding>() {
                             MMKVUtil.putString(Constant.MODE_NAME, "关闭")
                             modeBean.isSelect = false
                         }
+                        appDb.modeDao.insert(bean)
                     }
 
-                    NotificationUtil.updateNotify()
-                    MMKVUtil.putString(Constant.MODE, GsonUtils.toJson(mModeList))
-
+                    requireActivity().startService<ForegroundService>() {
+                        action = IntentAction.updateNotify
+                    }
                     adapter.notifyDataSetChanged()
                 }
             }
@@ -106,7 +127,7 @@ class AppFragment : BaseBindingFragment<FragmentAppBinding>() {
                     }
                     mModeList.removeAt(position)
                     adapter.notifyDataSetChanged()
-                    MMKVUtil.putString(Constant.MODE, GsonUtils.toJson(mModeList))
+                    appDb.modeDao.delete(mModeList[position])
 
                 }
                     .setNegativeButton("取消") { dialog, which ->
@@ -115,44 +136,31 @@ class AppFragment : BaseBindingFragment<FragmentAppBinding>() {
             }
             true
         }
-
-        adapter.emptyView = layoutInflater.inflate(R.layout.layout_empty_log, null)
-
-
+        adapter.setEmptyView(layoutInflater.inflate(R.layout.layout_empty_log, null))
     }
 
 
     //更新选中app
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeSelect(mode: ModeBean) {
-
-        if (isContains(mode.id)) {
+        if (appDb.modeDao.loadModeById(mode.id) != null) {
             mModeList?.forEach {
                 if (it.id == mode.id) {
                     it.appList = mode.appList
 //                    it.id = mode.id
                     it.startTime = mode.startTime
                     it.endTime = mode.endTime
-                    it.selectDate = mode.selectDate
+                    it.seletedTime = mode.seletedTime
                     it.isSelect = mode.isSelect
                     it.modeName = mode.modeName
                 }
             }
+            appDb.modeDao.update(mode)
         } else {
+            appDb.modeDao.insert(mode)
             mModeList?.add(0, mode)
         }
         adapter.notifyDataSetChanged()
-        MMKVUtil.putString(Constant.MODE, GsonUtils.toJson(mModeList))
-    }
-
-    private fun isContains(id: Long): Boolean {
-        var isContain = false
-        mModeList.forEach {
-            if (id == it.id) {
-                isContain = true
-            }
-        }
-        return isContain
     }
 
     override fun onDestroyView() {

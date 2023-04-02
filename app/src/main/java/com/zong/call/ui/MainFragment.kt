@@ -7,6 +7,7 @@ import com.google.android.material.navigation.NavigationBarView
 import com.zong.common.base.fragment.BaseBindingFragment
 import com.zong.call.R
 import com.zong.call.databinding.FragmentMainBinding
+import com.zong.call.ui.app.AppFragment
 import com.zong.call.ui.mine.MineFragment
 import me.yokeyword.fragmentation.SupportFragment
 
@@ -33,7 +34,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding>() {
                 override fun createFragment(position: Int): Fragment {
                     when (position) {
                         0 -> {
-                            return HomeFragment()
+                            return AppFragment()
                         }
                         1 -> {
                             return MineFragment()

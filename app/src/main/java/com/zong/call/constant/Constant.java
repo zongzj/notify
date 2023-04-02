@@ -21,7 +21,6 @@ public class Constant {
     public static final String VOICE_SPEED = "voice_speed";
     public static final String IS_FIRST_INSTALL = "is_first_install";
     public static final String INSTALL_APP = "install_app";
-    public static final String MODE = "mode";
     public static final String MODE_NAME = "mode_name";
     public static final String LIMIT_DATE = "limit_date";
     public static final String UNLOCK_NUM = "unlock_num";

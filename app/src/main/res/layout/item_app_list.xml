@@ -24,7 +24,7 @@
         android:textStyle="bold"
         tools:text="A" />
 
-    <com.android.common.view.UIImageView
+    <ImageButton
         android:id="@+id/iv_icon"
         android:layout_width="45dp"
         android:layout_height="45dp"

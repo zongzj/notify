@@ -6,9 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.GsonUtils
 import com.zong.call.R
 import com.zong.call.adapter.AllAppAdapter
+import com.zong.call.bean.InstalledApp
 import com.zong.call.constant.Constant
+import com.zong.call.databinding.ActivityAppListBinding
+import com.zong.call.event.MessageWrap
+import com.zong.call.ext.initToolbar
+import com.zong.call.ext.initToolbarClose
 
 import com.zong.call.utils.*
+import com.zong.common.base.activity.BaseActivity
+import com.zong.common.ext.runOnUI
+import com.zong.common.utils.LogUtils
 import com.zong.common.utils.MMKVUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -24,25 +32,34 @@ import org.greenrobot.eventbus.ThreadMode
 class AppListActivity : BaseActivity<ActivityAppListBinding>() {
     lateinit var app: InstalledApp
 
-    override fun bindind() = ActivityAppListBinding.inflate(layoutInflater)
+
     override fun initIntent(intent: Intent) {
         EventBus.getDefault().register(this)
-        Thread {
-            initRv()
-        }.start()
-
-
+        initRv()
     }
 
-    lateinit var list: MutableList<InstalledApp>
+    var list = mutableListOf<InstalledApp>()
     lateinit var adapter: AllAppAdapter
     private fun initRv() {
-        binding.apply {
-            initToolbar(layoutTitle.toolbar, "应用管理")
+        binding.includeToolbar.toolbar.run {
+            initToolbarClose("添加应用") {
+                finish()
+            }
         }
-        LogUtils.d(intent.getStringExtra("packname").toString())
-        list = InstalledAPPUtils.getAPPList(this)!!
-        adapter = AllAppAdapter(list, intent.getStringExtra("packname"))
+        var packname = intent.getStringExtra("packname")
+        LogUtils.d(TAG, intent.getStringExtra("packname").toString())
+        InstalledAPPUtils.getAPPList(this) {
+            it.forEach { app ->
+                if (packname!!.contains(app.packageName)) {
+                    app.isSelect = true
+                }
+                list.add(app)
+            }
+            runOnUI {
+                adapter.notifyDataSetChanged()
+            }
+        }
+        adapter = AllAppAdapter(list)
         binding?.rv?.layoutManager = LinearLayoutManager(this)
 //        binding?.rv?.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
         binding?.rv?.adapter = adapter
@@ -50,7 +67,6 @@ class AppListActivity : BaseActivity<ActivityAppListBinding>() {
             when (view.id) {
                 R.id.sw -> {
                     app = list[position]
-                    StatisticsUtil.onEvent(this, "close_switch", mutableMapOf("close_switch" to "close_switch"))
                     list[position].isSelect = !list[position].isSelect
                     EventBus.getDefault().post(app)
                     MMKVUtil.putString(Constant.INSTALL_APP, GsonUtils.toJson(list))
@@ -60,14 +76,14 @@ class AppListActivity : BaseActivity<ActivityAppListBinding>() {
         }
 
         binding.sideBar.setOnSelectIndexItemListener { index ->
-            LogUtils.d("index${index}")
             for (i in list.indices) {
-                if (list.get(i).index.equals(index)) {
-                    (binding.rv.getLayoutManager() as LinearLayoutManager).scrollToPositionWithOffset(i, 0)
+                if (list[i].index == index) {
+                    (binding.rv.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(i, 0)
                     return@setOnSelectIndexItemListener
                 }
             }
         }
+        adapter.setEmptyView(layoutInflater.inflate(R.layout.empty_loading, null))
 
         binding.tvTips.visibility = View.GONE
 
@@ -75,8 +91,6 @@ class AppListActivity : BaseActivity<ActivityAppListBinding>() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun unLockAPP(b: MessageWrap) {
-
-
         app.isUnLock = true
 //            var indexOf = list.indexOf(app)
         app.isSelect = true

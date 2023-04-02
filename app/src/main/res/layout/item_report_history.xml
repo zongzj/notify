@@ -47,7 +47,7 @@
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/iv_logo"
         android:maxLines="10"
-        android:text="赵德馨教授起诉中国知网获赔"
+        tools:text="赵德馨教授起诉中国知网获赔"
         android:textColor="#000"
         android:textSize="15sp" />
 

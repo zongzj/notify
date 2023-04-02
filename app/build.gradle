@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 
 }
 
@@ -49,6 +50,7 @@ android {
     sourceSets {
         main {
             res.srcDirs += "src/main/java/com/zong/call/ui/mine/res"
+            res.srcDirs += "src/main/java/com/zong/call/ui/app/res"
             jniLibs.srcDir 'libs'
             jni.srcDirs = []    //disable automatic ndk-build
         }
@@ -59,12 +61,20 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
 
     implementation project(path: ':lib_common')
+    implementation project(path: ':lib_WheelPicker')
+    implementation project(path: ':lib_WheelView')
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.4.+'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //kotlin
+    //noinspection GradleDependency,DifferentStdlibGradleVersion
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    //Kotlin反射
+    //noinspection GradleDependency,DifferentStdlibGradleVersion
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
 
 
     //dialog

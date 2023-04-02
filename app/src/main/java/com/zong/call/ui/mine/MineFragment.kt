@@ -37,7 +37,6 @@ class MineFragment : BaseBindingFragment<FragmentMineBinding>() {
                             (parentFragment as MainFragment?)!!.startBrotherFragment(SoundSettingFragment())
                         }
                         R.id.tv_feedback -> {
-
                             (parentFragment as MainFragment?)!!.startBrotherFragment(WebViewFragment.
                             newInstance(FEEDBACK_URL,"反馈"))
 

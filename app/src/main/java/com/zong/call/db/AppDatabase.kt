@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.zong.call.db.dao.DanMuDao
-import com.zong.call.db.dao.FilterDao
-import com.zong.call.db.dao.LiveDao
-import com.zong.call.db.entity.DanMu
-import com.zong.call.db.entity.FilterWord
-import com.zong.call.db.entity.Live
+import com.zong.call.db.dao.ModeDao
+import com.zong.call.db.dao.NotifyDao
+import com.zong.call.db.entity.ModeBean
+import com.zong.call.db.entity.NotifyBean
 import splitties.init.appCtx
 import java.util.*
 
@@ -18,25 +17,14 @@ val appDb by lazy {
     AppDatabase.createDatabase(appCtx)
 }
 
-@Database(
-    version = 1,
-    exportSchema = true,
-    entities = [Live::class,DanMu::class,FilterWord::class],
-    autoMigrations = [
-    ]
-//            AutoMigration(from = 58, to = 59)
-)
+@Database(version = 1, exportSchema = true, entities = [NotifyBean::class, ModeBean::class], autoMigrations = [])
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract val liveDao: LiveDao
-    abstract val danMuDao: DanMuDao
-    abstract val filterWord: FilterDao
-
+    abstract val notifyDao: NotifyDao
+    abstract val modeDao: ModeDao
 
     companion object {
-
-        private const val DATABASE_NAME = "rs.db"
-
+        private const val DATABASE_NAME = "notify.db"
         fun createDatabase(context: Context) = Room
             .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigrationFrom(1, 2, 3, 4, 5, 6, 7, 8, 9)

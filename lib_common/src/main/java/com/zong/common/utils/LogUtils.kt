@@ -20,14 +20,16 @@ object LogUtils {
 
     @JvmStatic
     fun d(tag: String, msg: String) {
-        if (BuildConfig.DEBUG) {
+        if (isDebug()) {
             logger.log(Level.INFO, "$tag $msg")
         }
     }
 
+
+
     @JvmStatic
     fun e(tag: String, msg: String) {
-        if (BuildConfig.DEBUG) {
+        if (isDebug()) {
             logger.log(Level.WARNING, "$tag $msg")
         }
     }
@@ -51,7 +53,7 @@ object LogUtils {
                     return (getCurrentDateStr(TIME_PATTERN) + ": " + record.message + "\n")
                 }
             }
-            level = if (BuildConfig.DEBUG) {
+            level = if (isDebug()) {
                 Level.INFO
             } else {
                 Level.OFF
@@ -60,7 +62,7 @@ object LogUtils {
     }
 
     fun upLevel() {
-        fileHandler?.level = if (BuildConfig.DEBUG) {
+        fileHandler?.level = if (isDebug()) {
             Level.INFO
         } else {
             Level.OFF
@@ -79,7 +81,11 @@ object LogUtils {
 }
 
 fun Throwable.printOnDebug() {
-    if (BuildConfig.DEBUG) {
+    if (isDebug()) {
         printStackTrace()
     }
+}
+private fun isDebug(): Boolean {
+    return BuildConfig.DEBUG
+
 }

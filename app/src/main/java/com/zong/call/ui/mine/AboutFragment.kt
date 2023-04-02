@@ -36,10 +36,6 @@ class AboutFragment : BaseBindingFragment<FragmentAboutBinding>() {
                         R.id.tv_privacy -> {
                             start(WebViewFragment.newInstance(YIN_SI, "隐私政策"))
 
-                            // 通知MainFragment跳转至NewFeatureFragment
-//                            (parentFragment!!.parentFragment as MainFragment?)!!.startBrotherFragment(WebViewFragment.newInstance("https://support.qq.com/embed/phone/349587/new-post","隐私政策"))
-//
-//                            (parentFragment as MainFragment?)!!.startBrotherFragment()
                         }
                         R.id.tv_protocol -> {
                             (parentFragment as MainFragment?)!!.startBrotherFragment(WebViewFragment.newInstance("https://support.qq.com/embed/phone/349587/new-post", "用户协议"))
@@ -54,7 +50,7 @@ class AboutFragment : BaseBindingFragment<FragmentAboutBinding>() {
                             toastOnUi("已复制")
                         }
                         R.id.tv_qq -> {
-                            joinQQGroup("FUMASwZONGhVlSsiUKhwBqKFonTcRZGP")
+                            joinQQGroup("LfWts2z5Wg35imkJWSQ5HbKz-d1vb2_F")
                         }
                         R.id.tv_lianxi -> {
                             start(WebViewFragment.newInstance(Lianxi, "开发者"))
@@ -64,7 +60,7 @@ class AboutFragment : BaseBindingFragment<FragmentAboutBinding>() {
                 }
 
             }
-            tvUpdate.text="版本更新（当前版本${AppUtils.getAppVersionName()}）"
+            tvUpdate.text = "版本更新（当前版本${AppUtils.getAppVersionName()}）"
 
         }
     }

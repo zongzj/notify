@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f425effc6333272ec7120c473b9ee110",
+    "identityHash": "fcdeb08e62e38cf40747057e9d554b3f",
     "entities": [
       {
-        "tableName": "Live",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `maxAudiencesNum` INTEGER NOT NULL DEFAULT 0, `likesNum` INTEGER NOT NULL, `startTime` INTEGER NOT NULL, `endTime` INTEGER NOT NULL, `nickname` TEXT NOT NULL, `title` TEXT NOT NULL, `summary` TEXT NOT NULL, `livePlatform` TEXT NOT NULL, `date` TEXT NOT NULL)",
+        "tableName": "NotifyBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time` INTEGER NOT NULL, `appLogo` TEXT NOT NULL, `appName` TEXT, `packName` TEXT, `notifyTitle` TEXT NOT NULL, `notifyContext` TEXT NOT NULL, `currentDate` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,59 +15,118 @@
             "notNull": true
           },
           {
-            "fieldPath": "maxAudiencesNum",
-            "columnName": "maxAudiencesNum",
+            "fieldPath": "time",
+            "columnName": "time",
             "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "0"
+            "notNull": true
           },
           {
-            "fieldPath": "likesNum",
-            "columnName": "likesNum",
+            "fieldPath": "appLogo",
+            "columnName": "appLogo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "appName",
+            "columnName": "appName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packName",
+            "columnName": "packName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "notifyTitle",
+            "columnName": "notifyTitle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notifyContext",
+            "columnName": "notifyContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentDate",
+            "columnName": "currentDate",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_NotifyBean_id",
+            "unique": true,
+            "columnNames": [
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_NotifyBean_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ModeBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `modeName` TEXT NOT NULL, `isSelect` INTEGER NOT NULL, `startTime` TEXT NOT NULL, `endTime` TEXT NOT NULL, `format` TEXT NOT NULL, `seletedTime` TEXT NOT NULL, `appList` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modeName",
+            "columnName": "modeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSelect",
+            "columnName": "isSelect",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "startTime",
             "columnName": "startTime",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "endTime",
             "columnName": "endTime",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "nickname",
-            "columnName": "nickname",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "title",
-            "columnName": "title",
+            "fieldPath": "format",
+            "columnName": "format",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "summary",
-            "columnName": "summary",
+            "fieldPath": "seletedTime",
+            "columnName": "seletedTime",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "livePlatform",
-            "columnName": "livePlatform",
+            "fieldPath": "appList",
+            "columnName": "appList",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "date",
-            "columnName": "date",
-            "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -78,127 +137,22 @@
         },
         "indices": [
           {
-            "name": "index_Live_id",
+            "name": "index_ModeBean_id",
             "unique": true,
             "columnNames": [
               "id"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Live_id` ON `${TABLE_NAME}` (`id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_ModeBean_id` ON `${TABLE_NAME}` (`id`)"
           }
         ],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "DanMu",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`liveId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sendTime` INTEGER NOT NULL, `fansClub` TEXT NOT NULL, `nickname` TEXT NOT NULL, `content` TEXT NOT NULL, `level` INTEGER NOT NULL DEFAULT 0, `hasRead` INTEGER NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "liveId",
-            "columnName": "liveId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "sendTime",
-            "columnName": "sendTime",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "fansClub",
-            "columnName": "fansClub",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "nickname",
-            "columnName": "nickname",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "content",
-            "columnName": "content",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "level",
-            "columnName": "level",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "0"
-          },
-          {
-            "fieldPath": "hasRead",
-            "columnName": "hasRead",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "liveId"
-          ]
-        },
-        "indices": [
-          {
-            "name": "index_DanMu_liveId",
-            "unique": false,
-            "columnNames": [
-              "liveId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_DanMu_liveId` ON `${TABLE_NAME}` (`liveId`)"
-          }
-        ],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "FilterWord",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `insertTime` INTEGER NOT NULL, `nickname` TEXT NOT NULL, `content` TEXT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "insertTime",
-            "columnName": "insertTime",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "nickname",
-            "columnName": "nickname",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "content",
-            "columnName": "content",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f425effc6333272ec7120c473b9ee110')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fcdeb08e62e38cf40747057e9d554b3f')"
     ]
   }
 }

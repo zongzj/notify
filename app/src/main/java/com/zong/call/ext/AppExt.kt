@@ -5,12 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
+import android.view.Gravity
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.blankj.utilcode.util.DeviceUtils
+import com.blankj.utilcode.util.ScreenUtils
 
 import com.blankj.utilcode.util.ToastUtils
 import com.zong.call.utils.SettingUtil
@@ -152,6 +156,21 @@ fun Context.joinQQGroup(key: String): Boolean {
         // 未安装手Q或安装的版本不支持
         false
     }
+}
+
+val Context.screenHeight
+    get() = ScreenUtils.getScreenHeight()
+
+val Context.screenWidth
+    get() = ScreenUtils.getScreenWidth()
+fun Context.emptyView(msg:String): TextView {
+    var text = TextView(this)
+    text.text = msg
+    text.textSize= 28F
+    text.gravity= Gravity.CENTER
+    text.width=screenWidth
+    text.height= screenHeight
+    return text
 }
 
 
